@@ -16,7 +16,6 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/students")
-@CrossOrigin(origins = "http://127.0.0.1:5500")  // Allow requests from your frontend URL
 public class RegistrationController {
 
     @Autowired
@@ -42,41 +41,36 @@ public class RegistrationController {
     ) throws IOException {
 
         try {
-            // Save the image to the specified directory
+            System.out.println("Anshu is here");
             String imageDirectory = "uploads/";
             String imagePath = imageDirectory + image.getOriginalFilename();
             File directory = new File(imageDirectory);
             if (!directory.exists()) {
-                directory.mkdirs();  // Create the directory if it doesn't exist
+                directory.mkdirs(); 
             }
             Path path = Paths.get(imagePath);
-            Files.write(path, image.getBytes());  // Write the image to the file system
+            Files.write(path, image.getBytes());
 
-            // Hash the user's password
             String passwordHash = passwordEncoder.encode(password);
 
-            // Create a new Student object
             Student student = new Student();
             student.setFullName(fullName);
             student.setFatherName(fatherName);
             student.setMotherName(motherName);
             student.setGender(gender);
-            student.setDateOfBirth(LocalDate.parse(dateOfBirth));  // Convert String to LocalDate
+            student.setDateOfBirth(LocalDate.parse(dateOfBirth)); 
             student.setCategory(category);
             student.setPhoneNumber(phoneNumber);
             student.setEmailAddress(emailAddress);
             student.setEmailAddress(address);
-            student.setImagePath(imagePath);  // Set the path to the uploaded image
-            student.setPasswordHash(passwordHash);  // Set the hashed password
+            student.setImagePath(imagePath);
+            student.setPasswordHash(passwordHash); 
 
-            // Save the student in the database
             Student savedStudent = studentRepository.save(student);
 
-            // Return a success response with student ID
             return new Response("success", savedStudent.getId());
 
         } catch (Exception e) {
-            // Return a failure response with the error message
             return new Response("failure", e.getMessage());
         }
     }
