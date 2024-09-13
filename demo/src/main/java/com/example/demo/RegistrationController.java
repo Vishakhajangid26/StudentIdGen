@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/students")
@@ -20,7 +21,9 @@ public class RegistrationController {
     @Autowired
     private StudentRepository studentRepository;
 
-    // Endpoint to register a new student
+    // Password encoder instance
+
+    // Registration endpoint (modifying password hashing)
     @PostMapping("/register")
     public Response registerStudent(
             @RequestParam String fullName,
@@ -37,34 +40,60 @@ public class RegistrationController {
     ) throws IOException {
 
         try {
-            System.out.println("Anshu is here");
             String imageDirectory = "uploads/";
             String imagePath = imageDirectory + image.getOriginalFilename();
             File directory = new File(imageDirectory);
             if (!directory.exists()) {
-                directory.mkdirs(); 
+                directory.mkdirs();
             }
-            System.err.println(imagePath);
             Path path = Paths.get(imagePath);
             Files.write(path, image.getBytes());
-            System.err.println(path);
+
             Student student = new Student();
             student.setFullName(fullName);
             student.setFatherName(fatherName);
             student.setMotherName(motherName);
             student.setGender(gender);
-            student.setDateOfBirth(dateOfBirth); 
+            student.setDateOfBirth(dateOfBirth);
             student.setCategory(category);
             student.setPhoneNumber(phoneNumber);
             student.setEmailAddress(emailAddress);
-            student.setEmailAddress(address);
+            student.setAddress(address);
             student.setImagePath(imagePath);
-            student.setPasswordHash(password); 
+
+            // Hash password before saving
+            student.setPasswordHash(password);
 
             Student savedStudent = studentRepository.save(student);
 
             return new Response("success", savedStudent.getId());
 
+        } catch (Exception e) {
+            return new Response("failure", e.getMessage());
+        }
+    }
+
+    // Login endpoint
+    @PostMapping("/login")
+    public Response login(
+            @RequestParam String emailAddress,
+            @RequestParam String password
+    ) {
+        try {
+            Optional<Student> optionalStudent = studentRepository.findByEmailAddress(emailAddress);
+
+            if (optionalStudent.isPresent()) {
+                Student student = optionalStudent.get();
+                System.out.println(password);
+                System.out.println(student.getPasswordHash());
+                if (password.equals(student.getPasswordHash())) {
+                    return new Response("success", "Login successful. Student ID: " + student.getId());
+                } else {
+                    return new Response("failure", "Invalid password.");
+                }
+            } else {
+                return new Response("failure", "Student not found with this email address.");
+            }
         } catch (Exception e) {
             return new Response("failure", e.getMessage());
         }
@@ -80,7 +109,6 @@ public class RegistrationController {
             this.data = data;
         }
 
-        // Getters and Setters
         public String getStatus() {
             return status;
         }

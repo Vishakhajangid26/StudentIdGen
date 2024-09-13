@@ -1,13 +1,18 @@
 package com.example.StudentDatabase.repository;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
+import java.util.Random;
+
 @Entity
 public class Student {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String Id;
-    private String name;
     private String motherName;
     private String fullName;
     private String fatherName;
@@ -18,6 +23,7 @@ public class Student {
     private String emailAddress;
     private String imagePath;
     private String passwordHash;
+    private String address;
 
     public void setMotherName(String _motherName) {
         motherName = _motherName;
@@ -26,6 +32,11 @@ public class Student {
 
     public void setFullName(String _fullName) {
         fullName = _fullName;
+        // throw new UnsupportedOperationException("Unimplemented method 'setFullName'");
+    }
+
+    public void setAddress(String _address) {
+        address = _address;
         // throw new UnsupportedOperationException("Unimplemented method 'setFullName'");
     }
 
@@ -69,8 +80,11 @@ public class Student {
         // throw new UnsupportedOperationException("Unimplemented method 'setPasswordHash'");
     }
 
-    public Object getId() {
-        throw new UnsupportedOperationException("Unimplemented method 'getId'");
+    public String getId() {
+        return  Id;
     }
 
+    public String getPasswordHash(){
+        return  passwordHash;
+    }
 }
