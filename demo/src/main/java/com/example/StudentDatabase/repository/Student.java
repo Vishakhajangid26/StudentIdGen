@@ -1,57 +1,72 @@
 package com.example.StudentDatabase.repository;
 
-import java.time.LocalDate;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 @Entity
 public class Student {
 
     @Id
+    private String Id;
     private String name;
-    public class Gender {
+    private String motherName;
+    private String fullName;
+    private String fatherName;
+    private String gender;
+    private String localDate;
+    private String category;
+    private String phoneNumber;
+    private String emailAddress;
+    private String imagePath;
+    private String passwordHash;
+
+    public void setMotherName(String _motherName) {
+        motherName = _motherName;
+        // throw new UnsupportedOperationException("Unimplemented method 'setMotherName'");
     }
 
-    public class Category {
+    public void setFullName(String _fullName) {
+        fullName = _fullName;
+        // throw new UnsupportedOperationException("Unimplemented method 'setFullName'");
     }
 
-    public void setMotherName(String motherName) {
-        throw new UnsupportedOperationException("Unimplemented method 'setMotherName'");
+    public void setFatherName(String _fatherName) {
+        fatherName = _fatherName;
+        // throw new UnsupportedOperationException("Unimplemented method 'setFatherName'");
     }
 
-    public void setFullName(String fullName) {
-        throw new UnsupportedOperationException("Unimplemented method 'setFullName'");
+    public void setGender(String _gender) {
+        gender = _gender;
+        // throw new UnsupportedOperationException("Unimplemented method 'setGender'");
     }
 
-    public void setFatherName(String fatherName) {
-        throw new UnsupportedOperationException("Unimplemented method 'setFatherName'");
+    public void setDateOfBirth(String _localDate) {
+        localDate = _localDate;
+        // throw new UnsupportedOperationException("Unimplemented method 'setDateOfBirth'");
     }
 
-    public void setGender(Gender gender) {
-        throw new UnsupportedOperationException("Unimplemented method 'setGender'");
+    public void setCategory(String _category) {
+        category = _category;
+        // throw new UnsupportedOperationException("Unimplemented method 'setCategory'");
     }
 
-    public void setDateOfBirth(LocalDate localDate) {
-        throw new UnsupportedOperationException("Unimplemented method 'setDateOfBirth'");
+    public void setPhoneNumber(String _phoneNumber) {
+        phoneNumber = _phoneNumber;
+        // throw new UnsupportedOperationException("Unimplemented method 'setPhoneNumber'");
     }
 
-    public void setCategory(Category category) {
-        throw new UnsupportedOperationException("Unimplemented method 'setCategory'");
+    public void setEmailAddress(String _emailAddress) {
+        emailAddress =_emailAddress;
+        // throw new UnsupportedOperationException("Unimplemented method 'setEmailAddress'");
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        throw new UnsupportedOperationException("Unimplemented method 'setPhoneNumber'");
+    public void setImagePath(String _imagePath) {
+        imagePath = _imagePath;
+        // throw new UnsupportedOperationException("Unimplemented method 'setImagePath'");
     }
 
-    public void setEmailAddress(String emailAddress) {
-        throw new UnsupportedOperationException("Unimplemented method 'setEmailAddress'");
-    }
-
-    public void setImagePath(String imagePath) {
-        throw new UnsupportedOperationException("Unimplemented method 'setImagePath'");
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        throw new UnsupportedOperationException("Unimplemented method 'setPasswordHash'");
+    public void setPasswordHash(String _passwordHash) {
+        passwordHash = _passwordHash;
+        // throw new UnsupportedOperationException("Unimplemented method 'setPasswordHash'");
     }
 
     public Object getId() {

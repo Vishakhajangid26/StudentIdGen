@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/students")
@@ -21,18 +20,15 @@ public class RegistrationController {
     @Autowired
     private StudentRepository studentRepository;
 
-    // Password encoder to hash passwords
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
     // Endpoint to register a new student
     @PostMapping("/register")
     public Response registerStudent(
             @RequestParam String fullName,
             @RequestParam String fatherName,
             @RequestParam String motherName,
-            @RequestParam Student.Gender gender,
+            @RequestParam String gender,
             @RequestParam String dateOfBirth,
-            @RequestParam Student.Category category,
+            @RequestParam String category,
             @RequestParam String phoneNumber,
             @RequestParam String emailAddress,
             @RequestParam String address,
@@ -48,23 +44,22 @@ public class RegistrationController {
             if (!directory.exists()) {
                 directory.mkdirs(); 
             }
+            System.err.println(imagePath);
             Path path = Paths.get(imagePath);
             Files.write(path, image.getBytes());
-
-            String passwordHash = passwordEncoder.encode(password);
-
+            System.err.println(path);
             Student student = new Student();
             student.setFullName(fullName);
             student.setFatherName(fatherName);
             student.setMotherName(motherName);
             student.setGender(gender);
-            student.setDateOfBirth(LocalDate.parse(dateOfBirth)); 
+            student.setDateOfBirth(dateOfBirth); 
             student.setCategory(category);
             student.setPhoneNumber(phoneNumber);
             student.setEmailAddress(emailAddress);
             student.setEmailAddress(address);
             student.setImagePath(imagePath);
-            student.setPasswordHash(passwordHash); 
+            student.setPasswordHash(password); 
 
             Student savedStudent = studentRepository.save(student);
 
